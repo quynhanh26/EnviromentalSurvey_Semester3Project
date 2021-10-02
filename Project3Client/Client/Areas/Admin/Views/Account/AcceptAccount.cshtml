@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewData["Title"] = "AcceptAccount";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">List Account</h4>
+            <table class="table table-striped" id="tableAcc">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th> Id People </th>
+                        <th> Date </th>
+                        <th> Role </th>
+                        <th> Account </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.listAccount != null)
+                        @foreach (var acc in ViewBag.listAccount)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/img/avatar/@acc.Img" class="mr-2" alt="image">@acc.UserName
+                                </td>
+                                <td>@acc.IdPeople</td>
+                                <td>@acc.Date.ToString("dd/MM/yyyy")</td>
+                                <td>@acc.Role</td>
+                                <td>
+                                    <button class="btn btn-gradient-warning">
+                                        <a href="/admin/account/detailAccount?idAccount=@acc.Id&&idPerson=@acc.IdPeople">
+                                            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                                        </a>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Performent";
+    Layout = "~/Areas/Staff/Views/Shared/_Layout.cshtml";
+}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+
+            <nav class="navbar navbar-expand-sm bg-light" style="margin-bottom:3%">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/detail?idSeminar=@ViewBag.idSeminar">Seminar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/performent?idSeminar=@ViewBag.idSeminar&&active=@ViewBag.active">Performent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/image?idSeminar=@ViewBag.idSeminar&&active=@ViewBag.active">Image</a>
+                    </li>
+                </ul>
+            </nav>
+            @if (@ViewBag.active == false)
+            {
+                <button class="file-upload-browse btn btn-gradient-info" type="button" data-toggle="modal" data-target="#ModalPer">Add</button>
+            }
+            <div class="row" id="listPer">
+                @if (ViewBag.performents != null)
+                {
+                    foreach (var item in ViewBag.performents)
+                    {
+                        <div class="col-md-3">
+                            <div id="speaker">
+                                <img src="~/img/performent/@item.IdPerformentNavigation.Img" class="img-fluid" style="width:100%">
+                                <div id="details">
+                                    <h3>@item.IdPerformentNavigation.Name</h3>
+                                    <p>Birthday: @item.IdPerformentNavigation.Dob.ToString("dd/MM/yyyy")</p>
+                                    <p>Gender: @(item.IdPerformentNavigation.Gender ? "Male":"Female")</p>
+                                    <form class="delPre" method="post">
+                                        <input value="@item.IdSeminar " name="idSeminar" hidden>
+                                        <input value="@item.IdPerformentNavigation.Id " name="idPerforment" hidden>
+                                        @if (ViewBag.active)
+                                        {
+                                            <button class="btn btn-gradient-danger" type="submit"><i class="mdi mdi-delete"></i></button>
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        THERE IS NO DATA!!!
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="ModalPer">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Peformer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <input hidden value="@ViewBag.idSeminar" id="idSer" />
+                    <div class="row" id="listPer2">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

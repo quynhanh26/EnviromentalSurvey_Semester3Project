@@ -1,0 +1,41 @@
+﻿@if (ViewBag.score != null || ViewBag.msg1 != null)
+{
+<script>alert("@ViewBag.score, @ViewBag.msg1")</script> }
+            else if (ViewBag.msg1 != null)
+            {
+                <script>alert("@ViewBag.msg1")</script>
+            }
+@{ ViewData["Title"] = "IndexView";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<section id="contact" class="section-with-bg" style="visibility: visible;animation-name: fadeInUp;">
+
+    <div class="container mt-5">
+        <div class="row">
+            @if (ViewBag.survey != null)
+            {
+@foreach (var survey in ViewBag.survey)
+{
+<div class="col-md-4 border border-light">
+    <h2 class="font-weight-bold text-center mt-3">@survey.Name</h2>
+    <hr>
+    <div class="survey-head text-center">
+        <i class="fas fa-poll-h fa-3x blue-text mb-2"></i>
+        <p class="font-weight-normal">Your opinion matters</p>
+        <p>
+            @survey.Description
+        </p>
+    </div>
+    <hr>
+    <div class="survey-footer clearfix">
+        <a asp-controller="survey" asp-action="question" asp-route-id="@survey.Id" class="btn btn-primary waves-effect waves-light">
+            Send
+            <i class="fa fa-paper-plane ml-1"></i>
+        </a>
+    </div>
+</div>}   
+            }
+        </div>
+
+    </div>
+</section>

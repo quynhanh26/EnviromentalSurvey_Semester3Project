@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "ListSerActive";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Seminar Table</h4>
+            <table class="table table-hover" id="tableSeminar">
+                <thead>
+                    <tr>
+                        <th> Seminar </th>
+                        <th> Presenter </th>
+                        <th> Time </th>
+                        <th> Action </th>
+                    </tr>
+                </thead>
+                <tbody id="tbobySeminar">
+                    @foreach (var seminar in ViewBag.listSeminar)
+                    {
+                        <tr>
+                            <td>
+                                <img src="~/img/seminar/@seminar.Img" class="mr-2" alt="image"> @seminar.Name
+                            </td>
+                            <td>@seminar.PresentersNavigation.Name</td>
+                            <td>@seminar.Day.ToString("dd/MM/yyyy") </td>
+                            <td>
+                                <button class="btn btn-gradient-warning">
+                                    <a asp-area="admin" asp-controller="seminar" asp-action="detailSerAccept" asp-route-id="@seminar.Id">
+                                        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                                    </a>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

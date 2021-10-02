@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<<div class="container section-with-bg" style="visibility: visible;animation-name: fadeInUp;">
+    <div class="section-header" style="padding-top: 2%;">
+        <h2>Satisfaction Survey </h2>
+    </div>
+    <form method="post" asp-controller="survey" asp-action="question">
+        <div class="container" id="cnt1">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6" id="panel1">
+                    <div class="panel panel-default">
+                        @if (ViewBag.question != null)
+                        {
+                        @foreach (var ques in ViewBag.question)
+                        {
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    <span class="fa fa-question-circle">@ques.Question1</span>
+                                </h3>
+                            </div>
+
+                            <div class="row">
+                                @foreach (var answer in ques.Answers)
+                                {
+                                    <div class="col-md-12">
+                                        <div class="well well-sm">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="question_@ques.Id" value="@answer.Id">
+                                                    @answer.Answer1
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        }
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                </div>
+            </div>
+        </div>
+
+        <div class="container" id="cnt1">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6" id="panel1">
+                    <div class="panel panel-default">
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">
+                                        <span class="fa fa-send"></span>Submit
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

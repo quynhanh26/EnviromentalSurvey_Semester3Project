@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-primary text-white mr-2">
+            <i class="mdi mdi-home"></i>
+        </span> Dashboard
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">
+                <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Recent Seminar</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Seminar </th>
+                                <th> Presenter </th>
+                                <th> Time </th>
+                                <th> Status </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.listSeminarDTO != null)
+                                @foreach (var seminar in ViewBag.listSeminarDTO)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="~/img/seminar/@seminar.Img" class="mr-2" alt="image"> @seminar.Name
+                                        </td>
+                                        <td>@seminar.NamePresenters</td>
+                                        <td>@seminar.Day.ToString("dd/MM/yyyy") </td>
+                                        @if (seminar.Day < DateTime.Now && seminar.Status)
+                                        {
+                                            <td>
+                                                <label class="badge badge-gradient-success">Completed</label>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <label class="badge badge-gradient-danger">False</label>
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Feedback</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th> Img </th>
+                                <th> Email </th>
+                                <th> UserName </th>
+                                <th> Massage </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (ViewBag.listCmtDTO != null)
+                                @foreach (var cmt in ViewBag.listCmtDTO)
+                                {
+                                    <tr>
+                                        <td>
+                                            <img src="~/img/avatar/@cmt.Img" class="mr-2" alt="image"> @cmt.UserName
+                                        </td>
+                                        <td>@cmt.Email</td>
+                                        <td>@cmt.UserName</td>
+                                        <td>@cmt.Massage </td>
+                                    </tr>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

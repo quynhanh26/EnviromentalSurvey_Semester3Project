@@ -1,0 +1,91 @@
+﻿@model Client.Models.Survey;
+@{ ViewData["Title"] = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml"; }
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <form method="post" asp-area="admin" asp-controller="survey" asp-action="update">
+                <input type="text" class="form-control" hidden asp-for="Id" required>
+                <div class="form-group">
+                    <h6><label for="Name">Name</label></h6>
+                    <input type="text" class="form-control" asp-for="Name" required>
+                </div>
+                <div class="form-group">
+                    <h6> <label for="daypicker">Updated</label></h6>
+                    <input type="text" class="form-control datepicker" id="Updated" asp-for="Updated" value="@(Model.Updated.ToString("MM/dd/yyyy"))" required>
+                </div>
+                <div class="form-group">
+                    <h6><label for="desc">Description</label></h6>
+                    <textarea class="form-control" id="desc" rows="4" asp-for="Description"></textarea>
+                </div>
+                <select class="custom-select" id="Active" asp-for="Active">
+                    <option value="false">Student</option>
+                    <option value="true">Teacher</option>
+                </select>
+                <button type="submit" class="btn btn-outline-success">Save</button>
+            </form>
+
+            <h4 class="card-title">Question Table</h4>
+            <hr />
+            <table class="table table-hover" id="quesSur">
+                <button class="btn btn-lg btn-gradient-primary " data-toggle="modal" data-target="#addQuesSur">
+                    + Add Question
+                </button>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Question</th>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody id="bodyq">
+
+                    @if (Model.QuestionSurveys != null)
+                    {
+        @foreach (var item in @Model.QuestionSurveys)
+        {
+<tr>
+    <td>@item.IdQuestion</td>
+    <td>@item.IdQuestionNavigation.Question1</td>
+    <td>
+        <button class="btn btn-lg btn-gradient-primary delQuesSur"><i class="mdi mdi-account-remove"></i></button>
+    </td>
+</tr>}
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="addQuesSur">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:200%; margin-left:-30%">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Question</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="card-body card-block">
+                        <input hidden value="@Model.Id" id="idSurvey">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="addQuesSur2">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Quesntion</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bodyaddQuesSur">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

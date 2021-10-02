@@ -1,0 +1,41 @@
+﻿@if (ViewBag.msg1 != null)
+{
+<script>alert("@ViewBag.msg1")</script>}
+@{ ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<section id="speakers" class="section-with-bg; img" style="visibility: visible;animation-name: fadeInUp;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2 style="color:black; margin-top:20px">List Seminar</h2>
+            <p style="color:black">Here are some of our speakers</p>
+        </div>
+        <div class="row">
+            @if (ViewBag.seminars != null)
+            {
+@foreach (var seminar in ViewBag.seminars)
+{
+<div class="col-lg-4 col-md-6" style="width:100%;height:100%">
+    <div class="speaker" data-aos="fade-up" data-aos-delay="100">
+        <img class="img-fluid" src="~/img/seminar/@seminar.Img" style="height:262.5px" />
+        <div class="details">
+            <h3><a asp-controller="seminar" asp-action="detail" asp-route-Id="@seminar.Id">@seminar.Name</a></h3>
+            <p>Workshop Date: @seminar.Day.ToString("dd/MM/yyyy") at @seminar.TimeStart</p>
+        </div>
+        <div class="social">
+            <a href=""><i class="bi bi-twitter"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+        </div>
+    </div>
+</div>} }
+            else
+            {
+<script>
+    alert("Haven't seminar.")
+</script>}
+        </div>
+    </div>
+</section>
+

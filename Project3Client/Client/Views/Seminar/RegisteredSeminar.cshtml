@@ -1,0 +1,52 @@
+﻿@{ ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="schedule" class="section-with-bg" style="visibility: visible;animation-name: fadeInUp;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>Event Schedule</h2>
+            <p>Here is our event schedule</p>
+        </div>
+        @if (ViewBag.msg != null)
+        {
+            <h3>@ViewBag.msg</h3>
+        }
+        else
+        {
+
+            @foreach (var seminar in ViewBag.seminar)
+            {
+                <ul class="nav nav-tabs" role="tablist" data-aos="fade-up" data-aos-delay="100">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#day-1" role="tab" data-bs-toggle="tab">@seminar.Name</a>
+                    </li>
+                </ul>
+
+                <h3 class="sub-heading">
+                    Voluptatem nulla veniam soluta et corrupti consequatur neque eveniet officia. Eius
+                    necessitatibus voluptatem quis labore perspiciatis quia.
+                </h3>
+
+                <div class="tab-content row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+
+                    <!-- Schdule Day 1 -->
+                    <div role="tabpanel" class="col-lg-9 tab-pane fade show active" id="day-1">
+
+                        <div class="row schedule-item">
+                            <div class="col-md-6">
+                                <h3>@seminar.Name</h3>
+                                <h3>@seminar.Presenters</h3>
+                                <h3>@seminar.TimeStart</h3>
+                                <h3>@seminar.Day</h3>
+                                <h3>@seminar.Place</h3>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+</section>

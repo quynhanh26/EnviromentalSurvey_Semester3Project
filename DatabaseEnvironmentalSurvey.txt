@@ -1,0 +1,450 @@
+﻿USE master
+GO
+
+DROP DATABASE IF EXISTS EnvironmentalSurvey
+CREATE DATABASE EnvironmentalSurvey
+GO
+
+USE EnvironmentalSurvey
+GO
+
+CREATE TABLE AllPeople(
+IdPerson NVARCHAR(250) PRIMARY KEY,
+[NAME] NVARCHAR(100),
+Img NVARCHAR(250),
+DOB DATE,
+Gender BIT,
+Position NVARCHAR(50),
+Class NVARCHAR(50),
+[Status] BIT
+)
+GO 
+
+CREATE TABLE Account(
+Id INT  PRIMARY KEY IDENTITY,
+UserName NVARCHAR(50),
+Email NVARCHAR(100) Unique,
+[Password] NVARCHAR(250),
+IdPeople NVARCHAR(250),
+Img NVARCHAR(250),
+Class NVARCHAR(50),
+[Date] DATE,
+[Role] NVARCHAR(50),
+[Status] BIT,
+Active BIT Default 0
+)
+GO
+
+
+
+CREATE TABLE Survey(
+Id INT IDENTITY PRIMARY KEY,
+[NAME] NVARCHAR(50),
+[Description] NVARCHAR(500),
+Updated DATE,
+Active BIT,
+[Status] BIT
+)
+GO
+
+CREATE TABLE Question(
+Id INT IDENTITY PRIMARY KEY,
+Question NVARCHAR(250),
+Updated DATE,
+[Status] BIT
+)
+GO
+
+CREATE TABLE QuestionSurvey
+(
+IdQuestion INT CONSTRAINT FK_QS_Question FOREIGN KEY(IdQuestion) REFERENCES Question(Id),
+IdSurvey INT CONSTRAINT FK_QS_Survey FOREIGN KEY(IdSurvey) REFERENCES Survey(Id),
+Updated DATE,
+[Status] BIT,
+PRIMARY KEY(IdQuestion,IdSurvey)
+)
+GO
+
+CREATE TABLE Answer(
+Id INT IDENTITY PRIMARY KEY,
+IdQuestion INT CONSTRAINT FK_Answer_Question FOREIGN KEY(IdQuestion) REFERENCES Question(Id),
+Answer NVARCHAR(250),
+Updated DATE,
+[Status] BIT
+)
+GO
+
+
+
+CREATE TABLE Score(
+IdAcc INT CONSTRAINT FK_Score_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id),
+IdSurvey INT CONSTRAINT FK_Score_Survey FOREIGN KEY(IdSurvey) REFERENCES Survey(Id),
+Score INT,
+[Status] BIT,
+PRIMARY KEY(IdAcc, IdSurvey)
+)
+GO
+
+
+CREATE TABLE Seminar(
+Id INT IDENTITY PRIMARY KEY,
+Img NVARCHAR(250),
+[Name] NVARCHAR(250),
+Presenters NVARCHAR(250) CONSTRAINT FK_Seminar_AllPeople FOREIGN KEY(Presenters) REFERENCES AllPeople(IdPerson),
+TimeStart TIME,
+TimeEnd TIME,
+[Day] DATE,
+Place NVARCHAR(50),
+Maximum INT,
+NumberOfParticipants INT,
+Active BIT,
+[Descriptoin] NVARCHAR(500),
+[Status] BIT
+)
+GO
+
+CREATE TABLE Img(
+Id INT IDENTITY PRIMARY KEY,
+[Path] NVARCHAR(250),
+IdSeminar INT CONSTRAINT FK_Img_Serminar FOREIGN KEY(IdSeminar) REFERENCES Seminar(Id)
+)
+GO
+
+CREATE TABLE Performer(
+Id INT IDENTITY PRIMARY KEY,
+[Name] NVARCHAR(100),
+Gender BIT,
+DOB DATE,
+Img NVARCHAR(250),
+[Status] BIT
+)
+GO
+
+CREATE TABLE RegisterSeminar(
+IdAcc INT CONSTRAINT FK_RegisterSeminar_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id),
+IdSeminar INT CONSTRAINT FK_RegisterSeminar_Seminar FOREIGN KEY(IdSeminar) REFERENCES Seminar(Id),
+[Status] BIT
+PRIMARY KEY(IdAcc, IdSeminar)
+)
+GO
+CREATE TABLE PerformenSeminar(
+IdPerforment INT CONSTRAINT FK_PerformenSeminar_Performer FOREIGN KEY(IdPerforment) REFERENCES Performer(Id),
+IdSeminar INT CONSTRAINT FK_PerformenSeminar_Seminar FOREIGN KEY(IdSeminar) REFERENCES Seminar(Id),
+[Status] BIT,
+PRIMARY KEY (IdPerforment, IdSeminar)
+)
+GO
+
+CREATE TABLE FAQ
+(
+Id INT IDENTITY PRIMARY KEY,
+Faq NVARCHAR(250),
+AnSwer NVARCHAR(250)
+)
+GO
+
+CREATE TABLE Comment
+(
+Id INT PRIMARY KEY identity,
+Massage NVARCHAR(Max),
+IdAcc INT CONSTRAINT FK_Comment_Account FOREIGN KEY(IdAcc) REFERENCES Account(Id)
+)
+GO
+
+INSERT INTO AllPeople
+VALUES ('people1', 'TL1', 'avatar1.jpg','2000-06-29',1,'sv','class1',1),
+('people2', 'TL2', 'avatar1.jpg','2000-06-29',1,'nv',null,1),
+('people3', 'TL3', 'avatar1.jpg','2000-06-29',1,'gv',null,1),
+('people4', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class1',1),
+('people6', 'TL2', 'avatar1.jpg','2000-06-29',0,'sv','class2',1),
+('people7', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class2',1),
+('people8', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class3',1),
+('people9', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class3',1),
+('people10', 'TL3', 'avatar1.jpg','2000-06-29',1,'sv','class4',1),
+('people11', 'TL4', 'avatar1.jpg','2000-06-29',0,'sv','class4',1),
+('people12', 'TL2', 'avatar1.jpg','2000-06-29',1,'sv','class5',1),
+('people13', 'TL3', 'avatar1.jpg','2000-06-29',0,'sv','class5',1),
+('people14', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class6',1),
+('people15', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class6',1),
+('people16', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class7',1),
+('people17', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class7',1),
+('people18', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class8',1),
+('people19', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class8',1),
+('people20', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class6',1),
+('people21', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class4',1),
+('people22', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class3',1),
+('people23', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class2',1),
+('people24', 'TL4', 'avatar1.jpg','2000-06-29',1,'sv','class1',1),
+('people25', 'TL2', 'avatar1.jpg','2000-06-29',0,'nv',null,1),
+('people26', 'TL3', 'avatar1.jpg','2000-06-29',0,'gv',null,1);
+GO
+
+INSERT INTO Account
+VALUES('admin','anh@gmail.com','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','people2','avatar1.jpg','class1', '2021-12-20','admin',1,1),
+('huy','nhathuy16122001@gmail.com','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','people1','avatar1.jpg', 'class1', '2021-12-20','sv',1, 1),
+('dinhanh','anh.td286@aptechlearning.edu.vn','$2b$10$c.p0fHnLthBS8wFAsxrZWOVKobGKfHk01.9A8jm0w4wcomG.T3d9C','people3','avatar1.jpg','class1', '2021-12-20','gv',1, 1),
+('Anhcute','anh.ntq31@aptechlearning.edu.vn','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','people4','avatar1.jpg', 'class1', '2021-12-20','sv',0, 1),
+('tuenghi','abc123@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','people5','avatar1.jpg', 'class1', '2021-12-20','sv',1, 1),
+('maimai','abc456@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','people6','avatar1.jpg','class1', '2021-12-20','sv',1, 1),
+('mimi','abc789@gmail.com','$10$B6r6V.lsqB0Y334pI3cIsu16M7.DYsgPyVxihvdOXcnuQovkGJCcS','people7','avatar1.jpg','class1', '2021-12-20','nv',1, 1);
+GO
+INSERT INTO Seminar
+VALUES('seminar1.jpg','Prove that natural environmental protection is protecting people"s lives','people1', '08:00:00', '10:30:00','2021-7-12','HCM',50,0,1,'Everyone who knows the environment is very important to each personality also in the public. Seeing the environmental protection is to protect our lives at the seminar.',1),
+('seminar1.jpg','Workshop on the harmful effects of environmental pollution','people3', '07:30:00', '10:00:00','2021-06-26','HCM',60,0,1,'Is the hungry environment very necessary, so did you know the harmful effects of the environment with people?',0),
+('seminar1.jpg','Workshop on environmental protection in hotels and resorts','people2', '08:00:00', '10:15:00','2021-07-05','HCM',45,45,1,'Learn about environmental protection for hotels and resorts at the seminar',1);
+GO
+
+INSERT INTO Question VALUES('What is global warming?','2021-06-17',1),
+('Rain AiCD is a phenomenon of rainwater with pH:','2021-06-17',1),
+('How many national parks in Viet Nam?','2021-06-17',1),
+('What is the ozone layer?','2021-06-17',1),
+('What is land pollution?','2021-06-17',1), 
+('Choose the best statement about the relationship between walls and resources:','2021-06-17',1),
+('When did the Earth day took  place?','2021-06-17',1),
+('Geography shell (landscape shell) included','2021-06-17',1),
+('When did the hours"s Earth day took  place?','2021-06-17',1),
+('The main types of natural resources include:','2021-06-17',1),
+('The following energy source if exploited to use will not cause environmental pollution:','2021-06-17',1),
+('What resources are here are a clean energy source?','2021-06-17',1),
+('The following energy source if exploited to use will not cause environmental pollution:','2021-06-17',1),
+('Vietnam Biodiversity Day is Date:','2021-06-17',1),
+('How many ecological factor groups?','2021-06-17',1),
+('The Environmental Protection Association called abbreviation is:','2021-06-17',1),
+('The green revolution was started in:','2021-06-17',1),
+('Landsat satellite is widely used in geological and environmental research is that water launched:','2021-06-17',1),
+('The pretreatment of wastewater typically takes place  ______________','2021-06-17',1),
+('An oxidation ditch is most similar to a(n) ______________ process.','2021-06-17',1),
+('Catenary bar is a type of _______________.','2021-06-17',1),
+('Chemical methods for removing nitrogen involve all of the following EXCEPT','2021-06-17',1),
+('Which of the following parameters is typically NOT found on an NPDES permit?','2021-06-17',1),
+('World Environment Day theme in 2008:','2021-06-17',1),
+('What does “3R” mean:','2021-06-17',1),
+('To assess the level of biological pollution, people use:','2021-06-17',1),
+('Greenhouse effects posted increased by:','2021-06-17',1);
+GO
+
+INSERT INTO Answer
+VALUES(1,'Is the average temperature phenomenon of air and oceans on earth increases according to observations in recent decades','2021-03-18',1),
+(1,'Is the phenomenon of earth being cooked with solar energy','2021-03-18',0),
+(1,'The phenomenon of Earth"s drought ','2021-03-18',0),
+(1,'Climate change phenomenon ','2021-03-18',0),
+(2,'<5.6','2021-03-18',1),
+(2,'<6.5','2021-03-18',0),
+(2,'<6','2021-03-18',0),
+(2,'<7','2021-03-18',0),
+(3,'8','2021-03-18',0),
+(3,'9','2021-03-18',0),
+(3,'10','2021-03-18',0),
+(3,'11','2021-03-18',1),
+(4,'Is a floor next to the air that Earth inside','2021-03-18',0),
+(4,'A layer beyond the stratosphere, surrounded by the earth, containing a large amount of ozone.','2021-03-18',0),
+(4,'Is a deep layer in the stratosphere, surrounding the earth, containing large amounts of ozone.','2021-03-18',1),
+(4,'Is an extraterrestrial layer that surrounds the earth','2021-03-18',0),
+(5,'It is a natural environmental pollution phenomenon','2021-03-18',0),
+(5,'Is the current environment environment are beingised in, of the products of features, learning and student of environment is change.','2021-03-18',1),
+(5,'Is the change in the physical, chemical and biological properties of the environment.','2021-03-18',0),
+(5,'Is the phenomenon of soil pollution, which causes the air to be changed.','2021-03-18',0),
+(6,'Environment benefits people and producing economic value.','2021-03-18',0),
+(6,'Resources bring benefits to people and produce economic value.','2021-03-18',1),
+(6,'Resources do not benefit people and produce economic value.','2021-03-18',0),
+(6,'Environment do not benefits people and producing economic value.','2021-03-18',0),
+(7,'22/04/1969','2021-03-18',0),
+(7,'22/04/1971','2021-03-18',0),
+(7,'22/04/1970','2021-03-18',1),
+(7,'22/04/1972','2021-03-18',0),
+(8,'The whole earth shell','2021-03-18',0),
+(8,'Earth shells and atmosphere above','2021-03-18',0),
+(8,'All geographic','2021-03-18',0),
+(8,'The shells invasion and mutual impact.','2021-03-18',1),
+(9,'From 20:30 to 21:30 (local time) The last Saturday of March every year','2021-03-18',1),
+(9,'From 21:30 to 22:30 (local time) The last Saturday of March every year','2021-03-18',0),
+(9,'From 20:30 to 21:30 (local time) The last Wednesday of March every year','2021-03-18',0),
+(9,'From 21:30 to 22:30 (local time) The last Wednesday of March every year','2021-03-18',0),
+(10,'Land, water and oil','2021-03-18',0),
+(10,'Land, water, creatures and forests','2021-03-18',0),
+(10,'Land, water, minerals, energy, creatures and forests','2021-03-18',1),
+(10,'Land, water, coal, creature, forest','2021-03-18',0),
+(11,'Natural gas','2021-03-18',0),
+(11,'Coal','2021-03-18',0),
+(11,'Oil','2021-03-18',0),
+(11,'Solar radiation','2021-03-18',1),
+(12,'Solar radiation, wind, heat in the ground','2021-03-18',1),
+(12,'Oil and gas','2021-03-18',0),
+(12,'Coal and metal mineral sources','2021-03-18',0),
+(12,'Oil, tide, gas','2021-03-18',0),
+(13,'22/05','2021-03-18',1),
+(13,'26/12','2021-03-18',0),
+(13,'26/06','2021-03-18',0),
+(13,'16/12','2021-03-18',0),
+(14,'2','2021-03-18',0),
+(14,'3','2021-03-18',1),
+(14,'4','2021-03-18',0),
+(14,'5','2021-03-18',0),
+(15,'GEF','2021-03-18',0),
+(15,'NUEP','2021-03-18',0),
+(15,'EPA','2021-03-18',1),
+(15,'ENV','2021-03-18',0),
+(16,'India','2021-03-18',0),
+(16,'America','2021-03-18',0),
+(16,'Mexico','2021-03-18',1),
+(16,'Philippines','2021-03-18',0),
+(17,'French','2021-03-18',1),
+(17,'America','2021-03-18',0),
+(17,'England','2021-03-18',0),
+(17,'China','2021-03-18',0),
+(18,'before a waste stream enters the collection system','2021-03-18',0),
+(18,'in the collection system','2021-03-18',0),
+(18,'with screens and grit removal','2021-03-18',1),
+(18,'during primary clarification','2021-03-18',0),
+(19,'step-feed','2021-03-18',0),
+(19,'extended aeration','2021-03-18',1),
+(19,'complete-mix','2021-03-18',0),
+(19,'plug flow','2021-03-18',0),
+(20,'rectangular clarifier','2021-03-18',1),
+(20,'grit classifier','2021-03-18',0),
+(20,'screening device','2021-03-18',0),
+(20,'skimmer mechanism','2021-03-18',0),  
+(21,'breakpoint chlorination','2021-03-18',1),
+(21,'ammonia stripping','2021-03-18',0),
+(21,'ferric chloride coagulation','2021-03-18',0),
+(21,'ion exchange','2021-03-18',0), 
+(22,'BOD','2021-03-18',0),
+(22,'VSS','2021-03-18',0),
+(22,'TSS','2021-03-18',0),
+(22,'fecal coliform','2021-03-18',1),
+(23,'Green City: Plan for our planet','2021-03-18',0),
+(23,'Melting ice - a hot problem','2021-03-18',0),
+(23,'Change habits: towards a little carbon economy','2021-03-18',1),
+(23,'Desert and desertification process','2021-03-18',0),
+(24,'Reduce, Reuse, Recycle','2021-03-18',1),
+(24,'Repair, Recycle, Remain','2021-03-18',0),
+(24,'Reduce, Remain, Repair','2021-03-18',0),
+(24,'Repair, Reuse, Remain','2021-03-18',0),
+(25,'PH index','2021-03-18',0),
+(25,'DO, BOD, COD','2021-03-18',0),
+(25,'Turbidity','2021-03-18',0),
+(25,'Coliform index','2021-03-18',1),
+(26,'Increasing CO2, CH4, CFC','2021-03-18',1),
+(26,'Increasing NO2','2021-03-18',0),
+(26,'Increasing NO','2021-03-18',0),
+(26,'Increasing CFC','2021-03-18',0);
+GO
+
+INSERT INTO FAQ
+VALUES('How to register for the survey?','You can click on the survey link that will have the link appears you fill in the link and click register.'),
+('How to participate in the survey?','You are a school student and are available at the school"s account, click on the link to fill in the information that can participate in the survey.'),
+('Why I am unable to participate in the survey?','Your account is expected to be locked or does not activate the account.'),
+('Why my registration request is not accepted?','Maybe you are no longer a school student or you have filled the wrong information when registering, please try again.'),
+('Will there be any benefit if participated in the survey?','You will have more knowledge about environmental protection and can receive reward from the school when answering the right questions.'),
+('How to participate in the competitions?','You participate in the Conference related to the contest.'),
+('What if there are some arrears in participating the survey?','You can contact us via support section for detailed support.');
+GO
+
+INSERT INTO Survey
+VALUES ('Environmental Protection','Survey1','2021-07-08',0,1),
+('Forest protection','Survey2','2021-07-08',1,1),
+('Water pollution','Survey3','2021-07-07',0,1),
+('Pollution of forest environment','Survey5','2021-07-07',0,1),
+('Water environment protection','Survey6','2021-07-07',1,1),
+('Wild animal protection','Survey6','2021-07-08',0,1);
+GO
+
+INSERT INTO Score
+VALUES(2,1,10,1),
+(3,1,6,1),
+(3,2,8,1),
+(4,2,7,1),
+(2,2,8,1);
+GO
+
+INSERT INTO Performer
+VALUES('Mai Le Huy',0,'1992-06-26','huy.jpg',1),
+('Nguyen Tan Phuong',0,'1989-06-27','phuong.jpg',1),
+('Le Quang Hai',0,'1985-06-28','hai.jpg',1),
+('Tran Thi My Trinh',1,'1989-06-29','trinh.jpg',1),
+('Vo Ngoc Lan',1,'1982-06-30','lan.jpg',1),
+('Vu Minh Tan',0,'1990-06-25','tan.jpg',1),
+('Dao Van Lam',0,'1992-06-24','lam.jpg',1);
+GO
+
+INSERT INTO PerformenSeminar
+VALUES(1,1,1),
+(1,2,1),
+(2,1,1),
+(3,1,1),
+(1,3,1),
+(2,2,1),
+(4,1,1);
+GO
+
+INSERT INTO Img
+VALUES ('seminar1.jpg',1),
+('seminar1.jpg',2),
+('seminar1.jpg',3);
+GO
+
+
+INSERT INTO Comment
+VALUES ('I hope the board will hold many workshops.', 2),
+('I hope the program will better improve', 4),
+('I hope the school will hold many activities such as planting trees..',5);
+GO
+
+INSERT INTO QuestionSurvey VALUES(1,1,'2021/06/30',1),
+(2,1,'2021/06/30',1),
+(3,1,'2021/06/30',1),
+(4,1,'2021/06/30',1),
+(5,1,'2021/06/30',1),
+(6,1,'2021/06/30',1),
+(7,2,'2021/06/30',1),
+(8,2,'2021/06/30',1),
+(9,2,'2021/06/30',1),
+(10,2,'2021/06/30',1),
+(11,2,'2021/06/30',1),
+(12,2,'2021/06/30',1),
+(13,2,'2021/06/30',1),
+(14,2,'2021/06/30',1),
+(15,2,'2021/06/30',1),
+(16,3,'2021/06/30',1),
+(17,3,'2021/06/30',1),
+(18,3,'2021/06/30',1),
+(19,3,'2021/06/30',1),
+(20,3,'2021/06/30',1),
+(21,3,'2021/06/30',1),
+(22,4,'2021/06/30',1),
+(23,4,'2021/06/30',1),
+(24,4,'2021/06/30',1),
+(25,4,'2021/06/30',1),
+(26,4,'2021/06/30',1),
+(12,5,'2021/06/30',1),
+(13,5,'2021/06/30',1),
+(14,5,'2021/06/30',1),
+(15,5,'2021/06/30',1),
+(16,5,'2021/06/30',1),
+(17,5,'2021/06/30',1),
+(18,5,'2021/06/30',1),
+(19,5,'2021/06/30',1),
+(20,5,'2021/06/30',1),
+(21,5,'2021/06/30',1),
+(14,6,'2021/06/30',1),
+(15,6,'2021/06/30',1),
+(16,6,'2021/06/30',1),
+(17,6,'2021/06/30',1),
+(18,6,'2021/06/30',1),
+(19,6,'2021/06/30',1),
+(20,6,'2021/06/30',1),
+(21,6,'2021/06/30',1),
+(22,6,'2021/06/30',1),
+(23,6,'2021/06/30',1);
+GO
+INSERT INTO RegisterSeminar VALUES(2,2,1),
+(4,2,1),
+(5,2,1),
+(6,2,1),
+(2,3,1),
+(4,3,1),
+(5,3,1),
+(6,3,1);
+GO
+select * from Account
+

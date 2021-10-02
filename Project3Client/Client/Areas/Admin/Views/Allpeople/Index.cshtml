@@ -1,0 +1,121 @@
+﻿@model Client.Models.AllPerson;
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">List People</h4>
+            <button class="btn btn-lg btn-gradient-primary " data-toggle="modal" data-target="#addPer">
+                + Add
+            </button>
+            <table class="table table-striped pagination1">
+                <thead>
+                    <tr>
+                        <th> Name </th>
+                        <th> Birthday </th>
+                        <th> Gender </th>
+                        <th> Position </th>
+                        <th> Class </th>
+                        <th> Status </th>
+                        <th> Delete </th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyAcc">
+                    @if (ViewBag.listPeople != null)
+                        @foreach (var item in ViewBag.listPeople)
+                        {
+                            <tr>
+                                <td>
+                                    <img src="~/img/person/@item.Img" class="mr-2" alt="image">@item.Name
+                                </td>
+                                <td>@item.Dob.ToString("dd/MM/yyyy")</td>
+                                <td>@(item.Gender ? "Male":"Female")</td>
+                                <td>@item.Position</td>
+                                <td>@(item.Class != null ? item.Class : "")</td>
+                                @if (item.Status)
+                                {
+                                    <td><label class="badge badge-gradient-success"> TRUE</label></td>
+                                }
+                                else
+                                {
+                                    <td><label class="badge badge-gradient-danger"> FASLE</label></td>
+                                }
+                                <td>
+                                    <button class="btn btn-gradient-danger">
+                                        <a asp-area="admin" asp-controller="allPeople" asp-action="del" asp-route-id="@item.IdPerson" onclick="return confirm('are you sure?')">
+                                            <i class="mdi mdi-account-remove"></i>
+                                        </a>
+                                    </button>
+                                    <button class="btn btn-gradient-warning">
+                                        <a asp-area="admin" asp-controller="allPeople" asp-action="detail" asp-route-id="@item.IdPerson">
+                                            <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                                        </a>
+                                    </button>
+
+                                </td>
+                            </tr>
+                        }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="addPer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Performer</h4>
+            </div>
+            <div class="modal-body">
+                <div class="col-lg-12">
+                    <div class="card-body card-block">
+                        <form class="forms-sample" method="post" asp-area="admin" asp-controller="allPeople" asp-action="create" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <h6><label for="Name">Full Name</label></h6>
+                                <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <h6> <label for="daypicker">Birthday</label></h6>
+                                <input type="text" class="form-control datepicker" asp-for="Dob" required>
+                            </div>
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" asp-for="Position">
+                                <option value="nv">Staff</option>
+                                <option value="gv">Teacher</option>
+                                <option value="sv">Student</option>
+                            </select>
+                            <div class="form-group">
+                                <h6><label for="Name">Class</label></h6>
+                                <input type="text" class="form-control" id="Name" asp-for="Class" placeholder="Class">
+                            </div>
+                            <div class="form-group">
+                                <h6><label>Image</label></h6>
+                                <input type="file" name="file" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" checked name="gender" id="inlineRadio1" value="true">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="false">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                            <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,179 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Layout-Client</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    @*<meta content="" name="keywords">
+    <meta content="" name="description">*@
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <!-- Favicons -->
+    <link href="~/img/logo2.png" rel="icon">
+    <link href="~/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link rel="stylesheet" type="text/css" href="~/css/styledropdown.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
+    <!-- Bootstrap CSS File -->
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/lib/venobox/venobox.css" rel="stylesheet">
+    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/lib//bootstrap/js/bootstrap.min.js" rel="stylesheet" />
+    <script type="text/javascript" src="~/js/jquery-1.10.2.min.js"></script>
+    <!-- Main Stylesheet File -->
+    <link href="~/css/style.css" rel="stylesheet">
+  
+
+
+</head>
+<body>
+    @*<button type="button" id="mobile-nav-toggle"><i class="fa fa-bars"></i></button>*@
+    <header id="header" style="background-color:black">
+        <div class="container">
+            <div id="logo" class="pull-left">
+                <a href="/home/index" class="scrollto"><img src="~/img/logo2.png" style="width:80px; height:80px"></a>
+            </div>
+            <nav id="nav-menu-container">
+                @*sf-js-enabled sf-arrows" style="touch-action: pan-y;*@
+                <ul class="nav-menu ">
+                    <li><a asp-controller="home" asp-action="index" style="text-decoration: none">Home</a></li>
+                    <li><a asp-controller="seminar" asp-action="index" style="text-decoration: none">Seminar</a></li>
+                    <li><a asp-controller="account" asp-action="top" style="text-decoration: none">Top</a></li>
+                    <li><a asp-controller="home" asp-action="gallery" style="text-decoration: none">Gallery</a></li>
+                    <li><a asp-controller="faq" asp-action="index" style="text-decoration: none">F.A.Q</a></li>
+                    <li><a asp-controller="comment" asp-action="index" style="text-decoration: none">Support</a></li>
+                    @if (Context.Session.GetString("username") != null)
+                    {
+        <li><a href="/survey/index" style="text-decoration: none">Survey</a></li>
+
+                        <li class="nav-item dropdown" style="text-decoration: none;color: blue;">
+                            <a class="nav-link" id="navbarDropdown">
+                                Wellcome @Context.Session.GetString("username")
+                            </a>
+                            <div class="dropdown-content">
+                                <a style="text-decoration: none" class="dropdown-item" asp-controller="account" asp-action="profile">Profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a style="text-decoration: none" class="dropdown-item" asp-controller="account" asp-action="logout">Logout</a>
+                                <div class="dropdown-divider"></div>
+                                <a style="text-decoration: none" asp-controller="seminar" asp-action="registeredseminar">SeminarRegistered</a>
+                                <div class="dropdown-divider"></div>
+                            </div>
+                        </li>
+ }
+                    else
+                    {
+        <li class="nav-item dropdown" style="color: blue">
+            <a class="nav-link" id="navbarDropdown">
+                Hello User
+            </a>
+            <div class="dropdown-content">
+                <a style="text-decoration: none" asp-controller="account" asp-action="login">Login</a>
+                <div class="dropdown-divider"></div>
+                <a style="text-decoration: none" asp-controller="account" asp-action="register">Register</a>
+                <div class="dropdown-divider"></div>
+
+            </div>
+        </li>
+}
+
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <main id="main">
+        @RenderBody()
+    </main>
+
+
+
+    <footer id="footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <img src="~/img/logo2.png" alt="Aptech">
+                        <p>In alias aperiam. Placeat tempore facere. Officiis voluptate ipsam vel eveniet est dolor et totam porro. Perspiciatis ad omnis fugit molestiae recusandae possimus. Aut consectetur id quis. In inventore consequatur ad voluptate cupiditate debitis accusamus repellat cumque.</p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Home</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">About us</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Services</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="fa fa-angle-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+
+                        <div class="social-links">
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong>TheEvent</strong>. All Rights Reserved
+            </div>
+        </div>
+    </footer><!-- #footer -->
+
+    <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/jquery/jquery-migrate.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/easing/easing.min.js"></script>
+    <script src="~/lib/superfish/hoverIntent.js"></script>
+    <script src="~/lib/superfish/superfish.min.js"></script>
+    <script src="~/lib/wow/wow.min.js"></script>
+    <script src="~/lib/venobox/venobox.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/css/bootstrap.min.css">
+    <script src="~/js/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    @*<script src="~/contactform/contactform.js"></script>*@
+    <script src="~/js/main.js"></script>
+    <script type="text/javascript" src="~/js/jquery-1.10.2.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ 
+</body>
+
+</html>

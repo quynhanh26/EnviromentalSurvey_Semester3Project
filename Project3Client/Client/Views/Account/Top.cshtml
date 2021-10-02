@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Top";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section id="hotels" class="section-with-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2 style="color:black">List Student</h2>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            @if (ViewBag.top != null)
+            {
+                @foreach (var tops in ViewBag.top)
+                {
+        <div class="col-lg-4 col-md-6">
+            <div class="hotel">
+                <div class="hotel-img">
+                    <img src="~/img/avatar/@tops.Img" alt="Hotel 1" class="img-fluid" style=" height: 310px; width: 414px;">
+                </div>
+                <h3><a href="#">@tops.UserName</a></h3>
+                <p>@tops.Class</p>
+            </div>
+        </div>}
+            }
+            else
+            {
+                <script>
+                    alert("There are currently no competitions so there are no points of the highest people.");
+                </script>
+            }
+        </div>
+    </div>
+</section>
+

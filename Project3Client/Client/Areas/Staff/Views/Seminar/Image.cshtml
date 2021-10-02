@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Image";
+    Layout = "~/Areas/Staff/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+
+            <nav class="navbar navbar-expand-sm bg-light" style="margin-bottom:3%">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/detail?idSeminar=@ViewBag.idSeminar">Seminar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/performent?idSeminar=@ViewBag.idSeminar&&active=@ViewBag.active">Performent</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/staff/seminar/image?idSeminar=@ViewBag.idSeminar&&active=@ViewBag.active">Image</a>
+                    </li>
+                </ul>
+            </nav>
+            @if (ViewBag.active == false)
+            {
+                <button class="file-upload-browse btn btn-gradient-info" type="button" data-toggle="modal" data-target="#ModalImg">Add</button>
+            }
+            @if (ViewBag.listImg == null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    THERE IS NO DATA!!!
+                </div>
+            }
+            else
+            {
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="width:65%; margin:auto">
+                    <div class="carousel-inner" id="imgSer">
+                        @foreach (var item in ViewBag.listImg)
+                        {
+                            <div class="carousel-item">
+                                <img class="d-block w-100" src="~/img/seminar/@item.Path" alt="First slide">
+                                <div class="carousel-caption d-none d-md-block">
+                                    @if (ViewBag.active == false)
+                                    {
+                                        <button class="btn btn-gradient-danger" type="button"><a href="/staff/seminar/delImg?idSeminar=@ViewBag.idSeminar&idImg=@item.Id ">Delete</a></button>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="ModalImg">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Image</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-area="staff" asp-controller="seminar" asp-action="addImgSer" enctype="multipart/form-data" id="addImg">
+                    <div class="row">
+                        <img id="blah" src="#" alt="your image" class="col-md-6" style="margin: auto; height:100%" />
+                    </div>
+                    <div class="row">
+                        <div class="input-group col-md-6" style="margin: auto">
+                            <div class="custom-file">
+                                <input hidden value="@ViewBag.idSeminar" name="idSeminar" />
+
+                                <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="file">
+                                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-6" style="margin: auto">
+                        <div>
+                            <button class="file-upload-browse btn btn-gradient-success" type="submit" data-toggle="modal" data-target="#ModalImg">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

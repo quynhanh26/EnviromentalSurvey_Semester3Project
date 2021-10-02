@@ -1,0 +1,78 @@
+﻿@model Client.Models.Seminar;
+@{
+    ViewData["Title"] = "DetailSerAccept";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div>
+                <button class="btn btn-gradient-success"><a asp-area="admin" asp-controller="seminar" asp-action="accept" asp-route-id="@Model.Id">Accept</a></button>
+                <button class="btn btn-gradient-danger"><a asp-area="admin" asp-controller="seminar" asp-action="delAccept" asp-route-id="@Model.Id">Del</a> </button>
+            </div>
+            <div class="row" style="margin-top:5%">
+                <form class="forms-sample  col-md-8" method="post">
+                    <div class="form-group">
+                        <h6><label for="Name">Name</label></h6>
+                        <input type="text" class="form-control" id="Name" asp-for="Name" placeholder="Name" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <h6> <label for="daypicker">Date</label></h6>
+                        @{ var ngay = Model.Day?.ToString("MM/dd/yyyy");}
+                        <input type="text" class="form-control" id="datepicker" asp-for="Day" value="@ngay" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6> <label>Time Start</label> </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <h6> <label>Time End</label></h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="md-form md-outline input-with-post-icon timepicker" twelvehour="true">
+                                    <input type="time" id="light-version-examples" class="form-control" asp-for="TimeStart" required disabled>
+                                    <i class="fas fa-envelope input-prefix"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="md-form md-outline input-with-post-icon timepicker" twelvehour="true">
+                                    <input type="time" id="dark-version-example" class="form-control" asp-for="TimeEnd" required disabled>
+                                    <i class="fas fa-envelope  input-prefix"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <h6> <label for="place">Place</label></h6>
+                        <input type="text" class="form-control" id="place" asp-for="Place" placeholder="Location" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <h6> <label for="maximum">Maximum number of people</label></h6>
+                        <input type="text" class="form-control" id="maximum" asp-for="Maximum" pattern="[0-9]{3}" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <h6><label for="desc">Description</label></h6>
+                        <textarea class="form-control" id="desc" asp-for="Descriptoin" rows="4" disabled></textarea>
+                    </div>
+                </form>
+                <div class="col-md-4" style="margin-top: 3.5%" id="profilePre">
+                    <div id="speaker">
+                        <img src="~/img/person/@Model.PresentersNavigation.Img" class="img-fluid" style="width:100%">
+                        <div id="details">
+                            <h3> @Model.PresentersNavigation.Name</h3>
+                            <p>Birthday: @Model.PresentersNavigation.Dob?.ToString("dd/MM/yyyy")</p>
+                            <p>Gender: @(Model.PresentersNavigation.Gender == true ? "Male" : "Female")</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" style="margin-top: 40%; position:absolute; right:2%" id="profilePre">
+                    <img src="~/img/seminar/@Model.Img" class="img-fluid" style="width:100%">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

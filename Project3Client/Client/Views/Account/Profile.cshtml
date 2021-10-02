@@ -1,0 +1,138 @@
+﻿@if (ViewBag.success != null)
+{
+    <script>alert("@ViewBag.success")</script>
+}
+@{
+    ViewData["Title"] = "Profile1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Client.Models.Account
+<link href="~/css/profilestyle.css" rel="stylesheet" />
+<section id="contact" class="section-with-bg">
+    <div class="container emp-profile">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="px-4 pt-0 pb-4 cover">
+                    <div class="align-items-end profile-head">
+                        <div class="profile mr-3 pr profile-img">
+                            @if (Model.Img != null)
+                            {
+                                <img src="~/img/avatar/@Model.Img" width="130" class="rounded mb-2 img-thumbnail" style="width:90%">}
+                            <button type="button" class="btn btn-outline-dark btn-sm btn-block" data-toggle="modal" data-target="#editprofile">Edit Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="profile-head" style="color:black">
+                    <h2 class="section-header">
+                        @Model.UserName
+                    </h2>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label>UserName</label>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label>@Model.UserName</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label>@Model.Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label>Class</label>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label>@Model.Class</label>
+                            </div>
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label>Date</label>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label>@Model.Date.ToString("dd/MM/yyyy")</label>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal" id="editprofile">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="login100-form-title p-b-32">
+                    Change Profile
+                </span>
+            </div>
+            <form method="post" asp-controller="account" asp-action="profile" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="card-body card-block">
+                        <div class="row">
+                            <div class="input-group col-lg-3 mb-3">
+                            </div>
+                            <div class="col-lg-9 mb-9">
+                                @if (Model.Img != null)
+                                {
+                                    <img src="~/img/avatar/@Model.Img" style="height:80%; width:65%;" />}
+                                <br />
+                                <input type="file" name="file" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 mb-4">
+                                </div>
+                                <div class="col-lg-8 mb-4">
+                                    <div class="row">
+                                        <div class="col-lg-6 mb-4">
+                                            <input id="firstName" type="text" name="username" asp-for="UserName" class="form-control bg-white  border-md">
+                                        </div>
+                                        <div class="col-lg-6 mb-4">
+                                            <label name="lastname" class="form-control bg-white">@Model.Class</label>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="text-align:center">
+                                        <div class="col-lg-12 mb-4">
+                                            <input id="email" type="email" name="email" asp-for="Email" class="form-control bg-white  border-md">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4">
+                                            <input id="passwordConfirmation" type="password" name="oldpassword" placeholder="Old Password" class="form-control bg-white  border-md">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4">
+                                            <input id="passwordConfirmation" type="password" name="newpass" placeholder="New Password" class="form-control bg-white  border-md">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-group col-lg-12 mb-4">
+                                            <input id="passwordConfirmation" type="password" name="confirmpass" placeholder="New Password" class="form-control bg-white  border-md">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" asp-controller="home" asp-action="index" class="form-control btn btn-dark submit px-3">Back</button>
+                    <button type="submit" class="form-control btn btn-primary submit px-3">Save</button>
+                </div>
+                <input type="hidden" name="name" value="@Model.Id" />
+            </form>
+        </div>
+    </div>
+</div>
+

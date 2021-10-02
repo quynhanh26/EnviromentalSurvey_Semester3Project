@@ -1,0 +1,36 @@
+﻿
+@model Client.DTO.SeminarDTO
+@{ ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+    }
+
+<section id="speakers-details" class="section-with-bg" style="visibility: visible;animation-name: fadeInUp;">
+    <div class="container" data-aos="fade-up">
+        <div class="section-header">
+            <h2>Seminar Details</h2>
+            <p>Praesentium ut qui possimus sapiente nulla.</p>  
+        </div>
+        <form class="form-detail" method="post" asp-controller="seminar" asp-action="detail">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="~/img/seminar/@Model.Img" style="width: 100%;height: 100%;" />
+                </div>
+                <div class="col-md-6">
+                    <div class="details">
+                        <h2 style="color:black">@Model.Name</h2>
+                        <p style="color:black">Workshop took place on the day : @Model.Day </p>
+                        <p style="color:black"> Time Start: @Model.TimeStart and time end @Model.TimeStart </p>
+                        <p style="color:black">Speaker is :@Model.NamePresenters and take place in @Model.Place </p>
+                        <p style="color:black">@Model.Descriptoin</p>
+                        <p style="color:black">If you want to join the workshop please click the registration button. Thank you!</p>
+                        @if (Model.Day > DateTime.Now)
+                        {
+                            <button class="btn btn-primary btn-xl text-uppercase" id="register" type="submit">Register</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
